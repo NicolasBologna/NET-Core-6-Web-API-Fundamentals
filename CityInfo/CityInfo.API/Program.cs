@@ -1,9 +1,14 @@
 #region Esto viene en el template, bueno no todo pq hay cosas q tengo q meter en el medio
+using CityInfo.API;
+using CityInfo.API.Services;
 using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Logging.AddDebug();
+builder.Logging.AddConsole();
 
 //builder.Services.AddControllers(); //Se pueden usar varios, pero este es el que menos cosas te mete por ej: builder.Services.AddMvc();
 //https://dotnettutorials.net/lesson/difference-between-addmvc-and-addmvccore-method/   ||| lo comento pq abajo lo uso modificado
@@ -20,6 +25,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<FileExtensionContentTypeProvider>(); // Esto lo agrega para que detecte solo en que formato descargar el archivo.
+
+#if DEBUG
+builder.Services.AddTransient<IMailService, LocalMailService>(); //Esta bueno porque si te pasas de Debug a Release se prende o apaga lo que se va a ejecutar
+#else
+builder.Services.AddTransient<IMailService, CloudMailService>();
+#endif
+
+builder.Services.AddSingleton<CitiesDataStore>();
 
 var app = builder.Build();
 

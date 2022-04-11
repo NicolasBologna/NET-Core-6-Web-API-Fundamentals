@@ -6,7 +6,7 @@ namespace CityInfo.API
     {
         public List<CityDto> Cities { get; set; }
 
-        public static CitiesDataStore Current { get; } = new CitiesDataStore(); //Alta magia; Es como un singleton simple???
+        //public static CitiesDataStore Current { get; } = new CitiesDataStore(); //Alta magia; Es como un singleton simple??? Si  -- Lo comentamos pq lo vamos a pasar como servicio.
 
         public CitiesDataStore()
         {

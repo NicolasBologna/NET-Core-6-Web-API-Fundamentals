@@ -7,6 +7,13 @@ namespace CityInfo.API.Controllers
     [Route("api/cities")]
     public class CitiesController : ControllerBase //controller deriva de ControllerBase
     {
+        private readonly CitiesDataStore _citiesDataStore;
+
+        public CitiesController(CitiesDataStore citiesDataStore)
+        {
+            this._citiesDataStore = citiesDataStore ?? throw new ArgumentNullException(nameof(citiesDataStore));
+        }
+
         [HttpGet] //("api/cities") ya no se necesita mas aca pq agregamos el route
         /*public JsonResult GetCities() //Botón derecho peek definition o alt+f12 ||| JsonResults implementa IActionResults
         {
@@ -16,7 +23,7 @@ namespace CityInfo.API.Controllers
         [HttpGet] //("api/cities") ya no se necesita mas aca pq agregamos el route
         public ActionResult<IEnumerable<CityDto>> GetCities() //Botón derecho peek definition o alt+f12 ||| JsonResults implementa IActionResults
         {
-            return Ok(CitiesDataStore.Current.Cities);
+            return Ok(_citiesDataStore.Cities);
         }
 
         [HttpGet("{id}")] //el 404 es solo cuando no puede hacer el route, en este caso si le mando un id q no existe no me va a devolver automaticamente un 404 si no un 200.
@@ -28,7 +35,7 @@ namespace CityInfo.API.Controllers
 
         public ActionResult<CityDto> GetCity(int id)
         {
-            var cityToReturn = CitiesDataStore.Current.Cities.FirstOrDefault(x => x.Id == id);
+            var cityToReturn = _citiesDataStore.Cities.FirstOrDefault(x => x.Id == id);
             if (cityToReturn == null)
                 return NotFound();
             return Ok(cityToReturn);

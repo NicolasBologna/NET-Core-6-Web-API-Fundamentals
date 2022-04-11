@@ -37,3 +37,5 @@ OJO con el patch que tiene un poco mas de vueltas. Patch básicamente es un json 
 Hay dos tipos de servicios? Service collection y en el program class?/????? ver en aspnet/core/fundamentals/dependency-injection
 
 Loggin, adentro de appsettings.json esta el Json por env que tiene la config x defecto de loggin
+
+Que diferencia hay entre el #if DEBUG vs if (app.Environment.IsDevelopment())??????
